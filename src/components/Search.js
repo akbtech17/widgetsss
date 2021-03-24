@@ -6,7 +6,7 @@ const Search = () => {
   const [term, setTerm] = useState("programming");
   const [results, setResults] = useState([]);
 
-  console.log(results);
+  //   console.log(results);
 
   useEffect(() => {
     //whenever our search term changes, we need to do something...
@@ -34,11 +34,23 @@ const Search = () => {
     search();
   }, [term]);
 
+  //to diplay list of results
+  const renderedResults = results.map((result, index) => {
+    return (
+      <div key={result.pageid} className="item">
+        <div className="content">
+          <div className="header">{result.title}</div>
+          {result.snippet}
+        </div>
+      </div>
+    );
+  });
+
   return (
     <div>
       <div className="ui form">
         <div className="field">
-          <label htmlFor="">Enter Search Term</label>
+          <label>Enter Search Term</label>
           <input
             value={term}
             onChange={(e) => setTerm(e.target.value)}
@@ -46,6 +58,7 @@ const Search = () => {
           />
         </div>
       </div>
+      <div className="ui celled list">{renderedResults}</div>
     </div>
   );
 };
