@@ -26,12 +26,12 @@ const Search = () => {
       setResults(data.query.search);
     };
 
-    //we must not search an empty string
-    // if (term) {
-    //   search();
-    // }
+    // we must not search an empty string
+    if (term) {
+      search();
+    }
 
-    search();
+    // search();
   }, [term]);
 
   //to diplay list of results
