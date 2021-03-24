@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const Accordion = ({ items }) => {
-  //setting up state activeIndex
+  //setting up state activeIndex - array destructing
   const [activeIndex, setActiveIndex] = useState(null);
 
   //helper function
