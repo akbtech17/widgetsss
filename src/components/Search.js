@@ -1,7 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from 'axios';
 
 const Search = () => {
   const [term, setTerm] = useState("");
+
+  useEffect(() => {
+    //whenever our search term changes, we need to do something...
+    //there are three ways to make async code in useEffect
+    const search = async()=> {
+        await axios.get('url');
+    };
+
+    search();
+  }, [term]);
+
   return (
     <div>
       <div className="ui form">
