@@ -25,24 +25,27 @@ const Search = () => {
       //note it should be inside search function
       setResults(data.query.search);
     };
+    //we need to skip timeout for initial render
+    if (term && !results.length) {
+      search();
+    } else {
+      // we must not search an empty string
+      //an integer identifier is returned which can be used to cancel timer
+      const timeoutId = setTimeout(() => {
+        if (term) {
+          search();
+        }
+      }, 1000);
 
-    // we must not search an empty string
-    //an integer identifier is returned which can be used to cancel timer
-    const timeoutId = setTimeout(() => {
-      if (term) {
-        search();
-      }
-    },1000);
-
-    //useeffect give us some special feature of Cleanup-Function
-    //which specify that we can rreturn only one thing from UE
-    //which is naother function, termed as CF
-    return () => {
-      //its CF
-      //so here we can clear timeout
-      clearTimeout(timeoutId);
+      //useeffect give us some special feature of Cleanup-Function
+      //which specify that we can rreturn only one thing from UE
+      //which is naother function, termed as CF
+      return () => {
+        //its CF
+        //so here we can clear timeout
+        clearTimeout(timeoutId);
+      };
     }
-    
   }, [term]);
 
   //to diplay list of results
