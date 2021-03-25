@@ -27,13 +27,22 @@ const Search = () => {
     };
 
     // we must not search an empty string
-    setTimeout(() => {
+    //an integer identifier is returned which can be used to cancel timer
+    const timeoutId = setTimeout(() => {
       if (term) {
         search();
       }
     },1000);
 
-    // search();
+    //useeffect give us some special feature of Cleanup-Function
+    //which specify that we can rreturn only one thing from UE
+    //which is naother function, termed as CF
+    return () => {
+      //its CF
+      //so here we can clear timeout
+      clearTimeout(timeoutId);
+    }
+    
   }, [term]);
 
   //to diplay list of results
