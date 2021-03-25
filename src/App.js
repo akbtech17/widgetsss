@@ -36,16 +36,26 @@ const options = [
 const App = () => {
   //to keep the track of what is currently selected in our dropdown
   const [selected, setSelected] = useState(options[0]);
+  const [show, setShow] = useState(true);
 
   return (
     <div>
       {/* <Accordion items={items}/> */}
       {/* <Search /> */}
-      <Dropdown
-        selected={selected}
-        onSelectedChange={(option)=>setSelected(option)}
-        options={options}
-      />
+      <button
+        onClick={() => {
+          setShow(!show);
+        }}
+      >
+        Toggle Dropdown
+      </button>
+      {show ? (
+        <Dropdown
+          selected={selected}
+          onSelectedChange={(option) => setSelected(option)}
+          options={options}
+        />
+      ) : null}
     </div>
   );
 };

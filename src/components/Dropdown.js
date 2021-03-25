@@ -9,15 +9,19 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
   //and set up EL
   useEffect(() => {
     //setting manual EL
-    document.body.addEventListener(
-      "click",
-      (event) => {
-        //   console.log("CLICK");
-        if (ref.current && ref.current.contains(event.target)) return;
-        setOpen(false);
-      },
-      { capture: true }
-    );
+    const onBodyClick = (event) => {
+      //   console.log("CLICK");
+      if (ref.current && ref.current.contains(event.target)) return;
+      setOpen(false);
+    };
+
+    document.body.addEventListener("click", onBodyClick, { capture: true });
+
+    //cleanup fuction - we need to turn off click listner when DD is removed from the DOM
+
+    return () => {
+      document.body.removeEventListener("click", onBodyClick);
+    };
   }, []);
 
   //rendering list of options
