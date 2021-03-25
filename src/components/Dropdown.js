@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const Dropdown = ({ options, selected, onSelectedChange }) => {
   const [open, setOpen] = useState(false);
+  const ref = useRef();
 
   //we need to set up a manual Event Listner on body element
   //for that we need to define uE, which will run on inital render only,
@@ -10,8 +11,9 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
     //setting manual EL
     document.body.addEventListener(
       "click",
-      () => {
+      (event) => {
         //   console.log("CLICK");
+        if (ref.current && ref.current.contains(event.target)) return;
         setOpen(false);
       },
       { capture: true }
@@ -35,7 +37,7 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
   });
 
   return (
-    <div className="ui form">
+    <div ref={ref} className="ui form">
       <div className="field">
         <label className="label">Select a Color!</label>
         <div
