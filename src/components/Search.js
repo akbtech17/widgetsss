@@ -46,7 +46,9 @@ const Search = () => {
         clearTimeout(timeoutId);
       };
     }
-  }, [term]);
+    //we have to add results.length in our dependency array to solve war
+    //ue is missing dependency result.length
+  }, [term,results.length]);
 
   //to diplay list of results
   const renderedResults = results.map((result, index) => {
