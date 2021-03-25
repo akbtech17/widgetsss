@@ -4,12 +4,24 @@ import axios from "axios";
 const Search = () => {
   //we may have deafult search term to prevent sesarch on empty string
   const [term, setTerm] = useState("programming");
+  const [debouncedTerm, setDebouncedTerm] = useState(term);
   const [results, setResults] = useState([]);
 
-  //   console.log(results);
-
+  //1st useEffect to watch over Term
   useEffect(() => {
-    //whenever our search term changes, we need to do something...
+    const timerId = setTimeout(() => {
+      setDebouncedTerm(term);
+    }, 1000);
+
+    return () => {
+      //CF to clear timeout
+      clearTimeout(timerId);
+    };
+  }, [term]);
+
+  //2nd useEffect to watch over debouncedTerm
+  useEffect(() => {
+    //only here we will make requests
     //there are three ways to make async code in useEffect
     const search = async () => {
       //making async request
@@ -19,36 +31,14 @@ const Search = () => {
           list: "search",
           origin: "*",
           format: "json",
-          srsearch: term,
+          srsearch: debouncedTerm,
         },
       });
       //note it should be inside search function
       setResults(data.query.search);
     };
-    //we need to skip timeout for initial render
-    if (term && !results.length) {
-      search();
-    } else {
-      // we must not search an empty string
-      //an integer identifier is returned which can be used to cancel timer
-      const timeoutId = setTimeout(() => {
-        if (term) {
-          search();
-        }
-      }, 1000);
-
-      //useeffect give us some special feature of Cleanup-Function
-      //which specify that we can rreturn only one thing from UE
-      //which is naother function, termed as CF
-      return () => {
-        //its CF
-        //so here we can clear timeout
-        clearTimeout(timeoutId);
-      };
-    }
-    //we have to add results.length in our dependency array to solve war
-    //ue is missing dependency result.length
-  }, [term,results.length]);
+    search();
+  }, [debouncedTerm]);
 
   //to diplay list of results
   const renderedResults = results.map((result, index) => {
