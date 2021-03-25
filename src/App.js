@@ -35,10 +35,7 @@ const options = [
 ];
 
 const App = () => {
-  //to keep the track of what is currently selected in our dropdown
-  const [selected, setSelected] = useState(options[0]);
-  const [show, setShow] = useState(true);
-
+  
   return (
     <div>
       <Translate />
