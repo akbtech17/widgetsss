@@ -40,22 +40,7 @@ const App = () => {
 
   return (
     <div>
-      {/* <Accordion items={items}/> */}
-      {/* <Search /> */}
-      <button
-        onClick={() => {
-          setShow(!show);
-        }}
-      >
-        Toggle Dropdown
-      </button>
-      {show ? (
-        <Dropdown
-          selected={selected}
-          onSelectedChange={(option) => setSelected(option)}
-          options={options}
-        />
-      ) : null}
+      
     </div>
   );
 };
