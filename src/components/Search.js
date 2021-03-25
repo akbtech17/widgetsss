@@ -27,9 +27,11 @@ const Search = () => {
     };
 
     // we must not search an empty string
-    if (term) {
-      search();
-    }
+    setTimeout(() => {
+      if (term) {
+        search();
+      }
+    },1000);
 
     // search();
   }, [term]);
